@@ -1,0 +1,236 @@
+{
+  "info": {
+    "name": "Pollfish API",
+    "description": "Pollfish is a mobile survey and market-research platform owned by Prodege LLC. This collection covers the two documented public REST surfaces: the Dashboard API on https://www.pollfish.com (publisher app management plus performance, revenue, demographics, and user-log analytics; HTTP Basic Auth with account email + secret key) and the survey-serving / offerwall API on https://wss.pollfish.com (request and render surveys; HTTPS GET/HEAD, not WebSocket). Docs: github.com/pollfish/docs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{pollfishEmail}}", "type": "string" },
+      { "key": "password", "value": "{{accountSecretKey}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "dashboardUrl", "value": "https://www.pollfish.com", "type": "string" },
+    { "key": "servingUrl", "value": "https://wss.pollfish.com", "type": "string" },
+    { "key": "pollfishEmail", "value": "", "type": "string" },
+    { "key": "accountSecretKey", "value": "", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Apps",
+      "item": [
+        {
+          "name": "List apps",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v2/apps", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v2", "apps"] },
+            "description": "Returns an array of the developer's apps."
+          }
+        },
+        {
+          "name": "Create an app",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"MyNewApp\",\n  \"category\": \"IAB22\",\n  \"subcategory\": \"IAB22-2\",\n  \"url\": \"https://play.google.com/store/apps/details?id=com.pollfish.demo\",\n  \"platform\": 0\n}" },
+            "url": { "raw": "{{dashboardUrl}}/api/public/v2/apps", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v2", "apps"] },
+            "description": "Creates a new publisher app (monetization placement) and returns its api_key."
+          }
+        },
+        {
+          "name": "Get an app",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v2/apps/{{apiKey}}", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v2", "apps", "{{apiKey}}"] },
+            "description": "Returns a single app object by api_key."
+          }
+        },
+        {
+          "name": "Update an app",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"MyNewApp2\",\n  \"third_party_surveys_enabled\": false\n}" },
+            "url": { "raw": "{{dashboardUrl}}/api/public/v2/apps/{{apiKey}}", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v2", "apps", "{{apiKey}}"] },
+            "description": "Updates properties of an existing app."
+          }
+        },
+        {
+          "name": "Delete an app",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v2/apps/{{apiKey}}", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v2", "apps", "{{apiKey}}"] },
+            "description": "Deletes an app by api_key."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "item": [
+        {
+          "name": "Performance for all apps",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/performance?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "performance"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Performance metrics (served, seen, accepted, completed) per network across all apps. Window must not exceed 31 days."
+          }
+        },
+        {
+          "name": "Performance for one app",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/{{apiKey}}/performance?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "{{apiKey}}", "performance"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Performance metrics for a single app."
+          }
+        },
+        {
+          "name": "Performance by country (one app)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/{{apiKey}}/performanceByCountry?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "{{apiKey}}", "performanceByCountry"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Performance metrics for a single app grouped by country."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Revenue",
+      "item": [
+        {
+          "name": "Revenue per provider (all apps)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/revenue?from=2026-06-01&to=2026-06-30&countries=US,FR", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "revenue"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }, { "key": "countries", "value": "US,FR" }] },
+            "description": "Total revenue per survey provider across all apps, optionally filtered by ISO country codes."
+          }
+        },
+        {
+          "name": "Revenue per provider (one app)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/{{apiKey}}/revenue?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "{{apiKey}}", "revenue"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Total revenue per survey provider for a single app."
+          }
+        },
+        {
+          "name": "Revenue per country (all apps)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/revenuePerCountry?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "revenuePerCountry"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Total revenue per country across all apps."
+          }
+        },
+        {
+          "name": "Revenue per country (one app)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/{{apiKey}}/revenuePerCountry?from=2026-06-01&to=2026-06-30", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "{{apiKey}}", "revenuePerCountry"], "query": [{ "key": "from", "value": "2026-06-01" }, { "key": "to", "value": "2026-06-30" }] },
+            "description": "Total revenue per country for a single app."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Demographics",
+      "item": [
+        {
+          "name": "Get respondent demographics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/demographics?user=4daf6394-4e9e-4d90-97b0-d665efad734b", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "demographics"], "query": [{ "key": "user", "value": "4daf6394-4e9e-4d90-97b0-d665efad734b" }] },
+            "description": "Returns the demographic profile for a respondent device id (enumeration codes)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Logs",
+      "item": [
+        {
+          "name": "Get user logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{dashboardUrl}}/api/public/v3/apps/{{apiKey}}/users_log?key=4daf6394-4e9e-4d90-97b0-d665efad734b&page=1&rows=50", "host": ["{{dashboardUrl}}"], "path": ["api", "public", "v3", "apps", "{{apiKey}}", "users_log"], "query": [{ "key": "key", "value": "4daf6394-4e9e-4d90-97b0-d665efad734b" }, { "key": "page", "value": "1" }, { "key": "rows", "value": "50" }] },
+            "description": "Paginated per-user survey logs for a device_id or request_uuid, with disqualification reasons."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Survey Distribution",
+      "item": [
+        {
+          "name": "Register device (request survey / offerwall)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{servingUrl}}/v2/device/register/true?dontencrypt=true&json={\"offerwall\":\"true\",\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"debug\":\"false\",\"ip\":\"72.229.28.185\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"always_return_content\":\"false\",\"content_type\":\"json\"}",
+              "host": ["{{servingUrl}}"],
+              "path": ["v2", "device", "register", "true"],
+              "query": [
+                { "key": "dontencrypt", "value": "true" },
+                { "key": "json", "value": "{\"offerwall\":\"true\",\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"debug\":\"false\",\"ip\":\"72.229.28.185\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"always_return_content\":\"false\",\"content_type\":\"json\"}" }
+              ]
+            },
+            "description": "Requests a survey or JSON offerwall for a device. All register params go inside the url-encoded json query param. HTTPS GET on wss.pollfish.com (not WebSocket). Returns 200 with a survey/offerwall or 204 when none available."
+          }
+        },
+        {
+          "name": "Check survey availability (HEAD)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "HEAD",
+            "header": [],
+            "url": {
+              "raw": "{{servingUrl}}/v2/device/register/true?dontencrypt=true&json={\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}",
+              "host": ["{{servingUrl}}"],
+              "path": ["v2", "device", "register", "true"],
+              "query": [
+                { "key": "dontencrypt", "value": "true" },
+                { "key": "json", "value": "{\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}" }
+              ]
+            },
+            "description": "HEAD variant of register - returns only the status code (200 survey available, 204 none) without the HTML body."
+          }
+        },
+        {
+          "name": "Load a specific survey",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{servingUrl}}/v2/device/survey/:survey_id?dontencrypt=true&json={\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}",
+              "host": ["{{servingUrl}}"],
+              "path": ["v2", "device", "survey", ":survey_id"],
+              "query": [
+                { "key": "dontencrypt", "value": "true" },
+                { "key": "json", "value": "{\"api_key\":\"{{apiKey}}\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}" }
+              ],
+              "variable": [{ "key": "survey_id", "value": "1878494", "description": "Survey id from an offerwall survey_link." }]
+            },
+            "description": "Loads and renders a specific survey by id (as referenced by an offerwall survey_link). Returns an HTML survey page."
+          }
+        }
+      ]
+    }
+  ]
+}

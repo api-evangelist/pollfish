@@ -1,0 +1,77 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Pollfish
+providerId: pollfish
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Surveys
+- Monetization
+- Rate Limiting
+- Quotas
+description: >-
+  Pollfish does not publish fixed numeric per-minute rate limits for its public
+  REST APIs. The Dashboard API (app management and analytics) is authenticated
+  with HTTP Basic Auth and documents functional constraints rather than throttle
+  ceilings - most notably that analytics queries (performance, revenue,
+  performanceByCountry) must span a from/to window of no more than 31 days per
+  request. The survey-serving / offerwall API on wss.pollfish.com is governed by
+  survey supply and eligibility rather than a request quota: a register call
+  returns HTTP 204 when no survey matches the respondent, the HTML offerwall is
+  capped at 60 surveys while the JSON offerwall returns a longer list, and each
+  respondent can complete a given survey only once (enforced via tx_id and
+  duplicate termination). Server-to-server postback callbacks are fired by
+  Pollfish, so their volume tracks survey completions rather than a client limit.
+notes: >-
+  No documented numeric requests-per-second or per-account throttle exists as of
+  the review date. Treat the 31-day analytics window as a hard per-request
+  constraint, page the user-log endpoint with page/rows, and implement retry with
+  backoff. Verify any account-level limits with Pollfish during reconciliation.
+sources:
+- https://www.pollfish.com/docs/dashboard-api
+- https://www.pollfish.com/docs/api-documentation
+- https://github.com/pollfish/docs/blob/master/dashboard-api.md
+- https://github.com/pollfish/docs/blob/master/api-documentation.md
+responseCodes:
+  noContent: 204
+  badRequest: 400
+limits:
+- name: Dashboard API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the Dashboard API.
+- name: Analytics Date Window
+  scope: request
+  metric: days
+  limit: 31
+  notes: The from/to window on performance, revenue, and per-country endpoints must not exceed 31 days.
+- name: HTML Offerwall Surveys
+  scope: request
+  metric: surveys
+  limit: 60
+  notes: The HTML offerwall returns up to 60 surveys; the JSON offerwall (content_type=json) returns a longer list.
+- name: Survey Completions Per Respondent
+  scope: respondent
+  metric: completions
+  limit: 1 per survey
+  notes: Each device_id may complete a given survey only once; repeats are rejected as duplicates (tx_id enforced).
+- name: Survey Availability
+  scope: respondent
+  metric: surveys
+  limit: eligibility-bound
+  notes: Register returns HTTP 204 when no eligible survey exists for the respondent; supply is not a fixed quota.
+policies:
+- name: No Content Signaling
+  description: The register/offerwall call returns HTTP 204 (no body) when no survey is available rather than an error; use HEAD to check availability cheaply.
+- name: Duplicate Prevention
+  description: A user may complete a specific survey only once; duplicate attempts are terminated and reported via the users_log disqualification reasons and s2s term_reason.
+- name: Reward Signing
+  description: When passing reward_conversion, callers must supply a valid HMAC-SHA1 sig; failed validation returns 400 "Hash check failed".
+- name: Backoff Strategy
+  description: Clients should implement retries with exponential backoff and honor the 31-day analytics window to avoid rejected queries.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

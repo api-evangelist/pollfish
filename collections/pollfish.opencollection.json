@@ -1,0 +1,241 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pollfish API",
+    "version": "1.0",
+    "description": "Documented public REST surfaces of Pollfish (a Prodege mobile survey and market-research platform): the Dashboard API on https://www.pollfish.com (HTTP Basic Auth) for app management and analytics, and the survey-serving / offerwall API on https://wss.pollfish.com (HTTPS GET/HEAD, not WebSocket)."
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{pollfishEmail}}",
+      "password": "{{accountSecretKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Apps", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List apps.", "type": "http" },
+          "http": { "method": "GET", "url": "https://www.pollfish.com/api/public/v2/apps" },
+          "docs": "Returns an array of the developer's apps."
+        },
+        {
+          "info": { "name": "Create an app.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://www.pollfish.com/api/public/v2/apps",
+            "body": { "type": "json", "data": "{\n  \"name\": \"MyNewApp\",\n  \"category\": \"IAB22\",\n  \"subcategory\": \"IAB22-2\",\n  \"url\": \"https://play.google.com/store/apps/details?id=com.pollfish.demo\",\n  \"platform\": 0\n}" }
+          },
+          "docs": "Creates a new publisher app (monetization placement) and returns its api_key."
+        },
+        {
+          "info": { "name": "Get an app.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v2/apps/:api_key",
+            "params": [{ "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." }]
+          },
+          "docs": "Returns a single app object by api_key."
+        },
+        {
+          "info": { "name": "Update an app.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://www.pollfish.com/api/public/v2/apps/:api_key",
+            "params": [{ "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." }],
+            "body": { "type": "json", "data": "{\n  \"name\": \"MyNewApp2\",\n  \"third_party_surveys_enabled\": false\n}" }
+          },
+          "docs": "Updates properties of an existing app."
+        },
+        {
+          "info": { "name": "Delete an app.", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://www.pollfish.com/api/public/v2/apps/:api_key",
+            "params": [{ "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." }]
+          },
+          "docs": "Deletes an app by api_key."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Performance", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Performance for all apps.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/performance",
+            "params": [
+              { "name": "from", "value": "2026-06-01", "type": "query", "description": "ISO 8601 start date (UTC)." },
+              { "name": "to", "value": "2026-06-30", "type": "query", "description": "ISO 8601 end date (UTC). Window <= 31 days." }
+            ]
+          },
+          "docs": "Performance metrics per network across all apps."
+        },
+        {
+          "info": { "name": "Performance for one app.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/performance",
+            "params": [
+              { "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." },
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" }
+            ]
+          },
+          "docs": "Performance metrics for a single app."
+        },
+        {
+          "info": { "name": "Performance by country (one app).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/performanceByCountry",
+            "params": [
+              { "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." },
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" }
+            ]
+          },
+          "docs": "Performance metrics for a single app grouped by country."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Revenue", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Revenue per provider (all apps).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/revenue",
+            "params": [
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" },
+              { "name": "countries", "value": "US,FR", "type": "query", "description": "Comma-separated ISO Alpha-2 codes." }
+            ]
+          },
+          "docs": "Total revenue per survey provider across all apps."
+        },
+        {
+          "info": { "name": "Revenue per provider (one app).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/revenue",
+            "params": [
+              { "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." },
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" }
+            ]
+          },
+          "docs": "Total revenue per survey provider for a single app."
+        },
+        {
+          "info": { "name": "Revenue per country (all apps).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/revenuePerCountry",
+            "params": [
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" }
+            ]
+          },
+          "docs": "Total revenue per country across all apps."
+        },
+        {
+          "info": { "name": "Revenue per country (one app).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/revenuePerCountry",
+            "params": [
+              { "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." },
+              { "name": "from", "value": "2026-06-01", "type": "query" },
+              { "name": "to", "value": "2026-06-30", "type": "query" }
+            ]
+          },
+          "docs": "Total revenue per country for a single app."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Demographics", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get respondent demographics.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/demographics",
+            "params": [{ "name": "user", "value": "4daf6394-4e9e-4d90-97b0-d665efad734b", "type": "query", "description": "Respondent device id." }]
+          },
+          "docs": "Returns the demographic profile for a respondent device id (enumeration codes)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "User Logs", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get user logs.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/users_log",
+            "params": [
+              { "name": "api_key", "value": "", "type": "path", "description": "The app's api_key." },
+              { "name": "key", "value": "4daf6394-4e9e-4d90-97b0-d665efad734b", "type": "query", "description": "device_id or request_uuid." },
+              { "name": "page", "value": "1", "type": "query" },
+              { "name": "rows", "value": "50", "type": "query" }
+            ]
+          },
+          "docs": "Paginated per-user survey logs with disqualification reasons."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Survey Distribution", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Register device (request survey / offerwall).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://wss.pollfish.com/v2/device/register/true",
+            "auth": { "type": "none" },
+            "params": [
+              { "name": "dontencrypt", "value": "true", "type": "query", "description": "Required on every request." },
+              { "name": "json", "value": "{\"offerwall\":\"true\",\"api_key\":\"YOUR_API_KEY\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"debug\":\"false\",\"ip\":\"72.229.28.185\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"content_type\":\"json\"}", "type": "query", "description": "URL-encoded JSON carrying all register parameters." }
+            ]
+          },
+          "docs": "Requests a survey or JSON offerwall for a device. HTTPS GET on wss.pollfish.com (not WebSocket). Returns 200 with a survey/offerwall or 204 when none available."
+        },
+        {
+          "info": { "name": "Check survey availability (HEAD).", "type": "http" },
+          "http": {
+            "method": "HEAD",
+            "url": "https://wss.pollfish.com/v2/device/register/true",
+            "auth": { "type": "none" },
+            "params": [
+              { "name": "dontencrypt", "value": "true", "type": "query" },
+              { "name": "json", "value": "{\"api_key\":\"YOUR_API_KEY\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}", "type": "query" }
+            ]
+          },
+          "docs": "Returns only the status code (200 available, 204 none) without the HTML body."
+        },
+        {
+          "info": { "name": "Load a specific survey.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://wss.pollfish.com/v2/device/survey/:survey_id",
+            "auth": { "type": "none" },
+            "params": [
+              { "name": "survey_id", "value": "1878494", "type": "path", "description": "Survey id from an offerwall survey_link." },
+              { "name": "dontencrypt", "value": "true", "type": "query" },
+              { "name": "json", "value": "{\"api_key\":\"YOUR_API_KEY\",\"device_id\":\"UNKNOWN_DEVICE_ID\",\"timestamp\":\"1551350478\",\"encryption\":\"NONE\",\"version\":\"7\",\"os\":\"3\",\"locale\":\"en\",\"ip\":\"72.229.28.185\"}", "type": "query" }
+            ]
+          },
+          "docs": "Loads and renders a specific survey by id. Returns an HTML survey page."
+        }
+      ]
+    }
+  ]
+}

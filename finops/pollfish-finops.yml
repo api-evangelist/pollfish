@@ -1,0 +1,104 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Pollfish
+providerId: pollfish
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Surveys
+- Market Research
+- Monetization
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Pollfish spend and earnings. Pollfish is two-sided. On the
+  researcher (demand) side it is a cost center: pay-as-you-go, billed per
+  completed survey response (from ~$0.95/response, 100-response minimum) with
+  surcharges per demographic targeting filter, survey length, and audience
+  difficulty - so cost scales with responses collected and targeting complexity,
+  not with API calls. On the publisher (supply) side it is a revenue center:
+  integrating the SDK / survey-serving API is free and the publisher earns a
+  revenue share (CPA in US dollar cents) per completed survey, which the Dashboard
+  API surfaces through the revenue and revenuePerCountry endpoints for
+  reconciliation against Pollfish payouts. Pollfish is owned by Prodege LLC.
+notes: >-
+  Per-response researcher rates are indicative and set live in the survey builder;
+  publisher revenue share is set by Pollfish and mediation partners. The APIs
+  themselves are not separately metered - model spend on responses purchased and
+  model income on completed-survey CPA. Verify current rates on pollfish.com/pricing.
+sources:
+- https://www.pollfish.com/pricing/
+- https://www.pollfish.com/docs/dashboard-api
+- https://www.pollfish.com/docs/api-documentation
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Prodege
+serviceCategory: Market Research and Survey Monetization
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Pollfish
+  ServiceCategory: Market Research and Survey Monetization
+  ProviderName: Pollfish
+  PublisherName: Prodege
+  InvoiceIssuerName: Prodege
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: completed_responses
+  description: Completed survey responses purchased by a researcher, billed per response.
+  unit: responses
+  aggregation: sum
+  dimensions:
+  - account
+  - survey
+  - country
+- name: targeting_filters
+  description: Demographic targeting filters applied to a survey, each adding a per-response surcharge.
+  unit: filters
+  aggregation: sum
+  dimensions:
+  - account
+  - survey
+- name: publisher_revenue_cpa
+  description: Revenue earned by a publisher per completed survey (CPA in US dollar cents), reported via the Dashboard API.
+  unit: usd_cents
+  aggregation: sum
+  dimensions:
+  - app
+  - provider
+  - country
+- name: survey_completions
+  description: Count of surveys completed through a publisher app, driving both revenue and s2s postback volume.
+  unit: completions
+  aggregation: sum
+  dimensions:
+  - app
+  - provider
+principles:
+- name: Visibility
+  description: For researchers, track responses purchased and targeting surcharges per survey; for publishers, track CPA revenue per app, provider, and country via the revenue and revenuePerCountry endpoints.
+- name: Allocation
+  description: Name surveys and publisher apps per project/team so response spend and CPA revenue map to internal cost and revenue centers.
+- name: Optimization
+  description: Researchers reduce cost by minimizing unnecessary targeting filters, keeping surveys short, and right-sizing response counts; publishers optimize fill and revenue by enabling third-party mediation surveys and tuning placement behavior.
+- name: Accountability
+  description: Reconcile Dashboard API revenue reports against Pollfish payouts monthly, and review researcher response spend against research budgets.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

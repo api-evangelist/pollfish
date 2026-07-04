@@ -1,0 +1,142 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Pollfish
+providerId: pollfish
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Surveys
+- Market Research
+- Monetization
+- Pay As You Go
+- Plans
+description: >-
+  Pollfish has two economic sides, and the pricing differs completely between
+  them. For researchers (the demand side), Pollfish is pay-as-you-go with no
+  subscription: you build a survey, define an audience, and pay per completed
+  response. Published base pricing starts at $0.95 per completed response with a
+  minimum order of 100 responses; each demographic targeting filter adds roughly
+  $0.55 per response, and price rises further with longer surveys and harder-to-
+  reach audiences (real-time pricing is shown before launch). A Basic and an
+  Elite plan tier are offered. For publishers (the supply side), integrating the
+  Pollfish SDK, web plugin, or survey-serving API is free - publishers instead
+  earn revenue (revenue share) on each survey their users complete, reported
+  through the Dashboard API revenue endpoints. The Dashboard API and the
+  survey-serving API themselves carry no separate access fee.
+notes: >-
+  Per-response figures are from Pollfish's public pricing page and are indicative;
+  the exact amount depends on targeting, length, and country and updates live in
+  the survey builder. Verify current researcher pricing and the Basic vs Elite
+  feature split on pollfish.com/pricing during reconciliation.
+sources:
+- https://www.pollfish.com/pricing/
+- https://www.pollfish.com/docs/api-documentation
+- https://www.pollfish.com/docs/dashboard-api
+- https://github.com/pollfish/docs
+plans:
+- id: pollfish-researcher-basic
+  name: Researcher - Basic (Pay As You Go)
+  type: usage
+  description: >-
+    Self-serve survey creation with pay-per-response billing and no subscription.
+    Build surveys, target an audience, and pay only for completed responses.
+  entries:
+  - label: Base Price Per Completed Response
+    name: base_response
+    type: usage
+    metric: responses
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from $0.95 per completed response (100-response minimum)
+    userMultiplied: false
+  - label: Per Targeting Filter Surcharge
+    name: targeting_filter
+    type: usage
+    metric: responses
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: approx +$0.55 per response per demographic filter
+    userMultiplied: false
+  elements:
+  - name: Survey Builder
+  - name: AI Survey Tools
+  - name: Standard Demographic Targeting
+  - name: Real-Time Pricing
+- id: pollfish-researcher-elite
+  name: Researcher - Elite
+  type: usage
+  description: >-
+    Higher-tier researcher plan with expanded targeting, quality, and support
+    capabilities on top of the pay-per-response model. Exact feature split and
+    rates are set by Pollfish.
+  entries:
+  - label: Completed Responses
+    name: elite_responses
+    type: usage
+    metric: responses
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: pay-per-response (see pricing page / contact sales)
+    userMultiplied: false
+  elements:
+  - name: Advanced Targeting
+  - name: Priority Support
+  - name: Higher Quality Controls
+- id: pollfish-publisher-monetization
+  name: Publisher Monetization (Revenue Share)
+  type: free
+  description: >-
+    Free to integrate the Pollfish SDK, web plugin, or survey-serving / offerwall
+    API. Publishers do not pay to access the APIs; they earn a revenue share on
+    each completed survey (CPA in US dollar cents), reported via the Dashboard API
+    revenue endpoints and paid out per Pollfish payment terms.
+  entries:
+  - label: API and SDK Access
+    name: publisher_access
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (publishers earn revenue share)
+    userMultiplied: false
+  elements:
+  - name: Survey Serving API
+  - name: Offerwall
+  - name: Rewarded Surveys
+  - name: Dashboard API (Apps, Performance, Revenue, Demographics, Logs)
+  - name: Server-to-Server Callbacks
+- id: pollfish-enterprise
+  name: Enterprise / Custom
+  type: enterprise
+  description: >-
+    Custom arrangements for high-volume researchers and publishers - negotiated
+    per-response rates, dedicated support, and platform terms. Contact Pollfish
+    (Prodege).
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Support
+  - name: Custom Terms
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

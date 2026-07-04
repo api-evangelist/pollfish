@@ -1,0 +1,219 @@
+aid: pollfish
+url: https://raw.githubusercontent.com/api-evangelist/pollfish/refs/heads/main/apis.yml
+name: Pollfish
+kind: company
+description: Pollfish is a mobile-first survey and market research platform, owned by
+  Prodege LLC. It lets researchers reach real respondents inside mobile apps and
+  websites and lets app publishers monetize their audience by serving Pollfish
+  (and mediated third-party) surveys as rewarded ads or an offerwall. Pollfish
+  exposes a REST Dashboard API on https://www.pollfish.com for managing publisher
+  apps and pulling performance, revenue, demographic, and user-log analytics
+  (HTTP Basic Auth), plus a survey-serving / offerwall API on
+  https://wss.pollfish.com for requesting and rendering surveys, and
+  server-to-server postback callbacks for survey-completion and eligibility
+  events. Survey creation and audience targeting for researchers are done through
+  the Pollfish dashboard and are not exposed as a documented public REST API.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Surveys
+- Market Research
+- Mobile
+- Monetization
+- Offerwall
+- Rewarded Ads
+- Prodege
+created: '2026-07-04'
+modified: '2026-07-04'
+specificationVersion: '0.19'
+apis:
+- aid: pollfish:pollfish-apps-api
+  name: Pollfish Apps API
+  tags:
+  - Apps
+  - Placements
+  - Dashboard
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/dashboard-api
+  baseURL: https://www.pollfish.com/api/public/v2
+  properties:
+  - url: https://www.pollfish.com/docs/dashboard-api
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/dashboard-api.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: Create, read, update, and delete the publisher apps (monetization
+    placements) that receive Pollfish surveys. Each app carries category, platform,
+    behavior, reward-currency, and offerwall configuration, and returns an api_key
+    used across the rest of the platform. HTTP Basic Auth with Pollfish email plus
+    account secret key.
+- aid: pollfish:pollfish-performance-api
+  name: Pollfish Performance API
+  tags:
+  - Analytics
+  - Performance
+  - Metrics
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/dashboard-api
+  baseURL: https://www.pollfish.com/api/public/v3
+  properties:
+  - url: https://www.pollfish.com/docs/dashboard-api
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/dashboard-api.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: Pull survey-serving performance metrics (served, seen, accepted,
+    completed) per survey network, for all apps or a single app, over a date range
+    of up to 31 days, optionally grouped by country.
+- aid: pollfish:pollfish-revenue-api
+  name: Pollfish Revenue API
+  tags:
+  - Revenue
+  - Reporting
+  - FinOps
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/dashboard-api
+  baseURL: https://www.pollfish.com/api/public/v3
+  properties:
+  - url: https://www.pollfish.com/docs/dashboard-api
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/dashboard-api.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: Report publisher revenue per survey provider (Pollfish, Toluna, Cint,
+    and other mediation networks) and per country, for all apps or a single app,
+    over a date range, with optional ISO country filtering.
+- aid: pollfish:pollfish-respondent-demographics-api
+  name: Pollfish Respondent Demographics API
+  tags:
+  - Demographics
+  - Audience
+  - Respondents
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/dashboard-api
+  baseURL: https://www.pollfish.com/api/public/v3
+  properties:
+  - url: https://www.pollfish.com/docs/demographic-surveys
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/dashboard-api.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: Fetch the collected demographic profile (gender, year of birth,
+    education, employment, income, marital status, parental, race, career) for a
+    given respondent device id, using Pollfish's demographic enumeration codes.
+- aid: pollfish:pollfish-user-logs-api
+  name: Pollfish User Logs API
+  tags:
+  - Logs
+  - Respondents
+  - Disqualification
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/dashboard-api
+  baseURL: https://www.pollfish.com/api/public/v3
+  properties:
+  - url: https://www.pollfish.com/docs/dashboard-api
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/dashboard-api.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: Retrieve paginated per-user survey logs for a given device_id or
+    request_uuid - which surveys were started and completed, and the
+    disqualification reason (quota full, screenout, duplicate, VPN, quality, and
+    other public termination reasons) when not completed.
+- aid: pollfish:pollfish-survey-distribution-api
+  name: Pollfish Survey Distribution and Offerwall API
+  tags:
+  - Surveys
+  - Offerwall
+  - Monetization
+  - Distribution
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/api-documentation
+  baseURL: https://wss.pollfish.com
+  properties:
+  - url: https://www.pollfish.com/docs/api-documentation
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/api-documentation.md
+    type: APIReference
+  - url: https://github.com/pollfish/api-pollfish
+    type: SampleCode
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  - url: collections/pollfish.postman_collection.json
+    type: PostmanCollection
+  - url: collections/pollfish.opencollection.json
+    type: OpenCollection
+  description: The SDK-alternative survey-serving surface. Register a device to
+    request a matching survey (or a JSON offerwall list of surveys with reward and
+    remaining-completes data), then load the returned survey_link to render the
+    survey to the respondent. Supports single-survey, HTML offerwall, and JSON
+    offerwall modes, targeting via demographic and device parameters, and reward
+    conversion signing. Note the host is wss.pollfish.com but the transport is
+    HTTPS GET, not WebSocket.
+- aid: pollfish:pollfish-s2s-callbacks-api
+  name: Pollfish Server-to-Server Callbacks
+  tags:
+  - Webhooks
+  - Postbacks
+  - Callbacks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.pollfish.com/docs/s2s
+  properties:
+  - url: https://www.pollfish.com/docs/s2s
+    type: Documentation
+  - url: https://github.com/pollfish/docs/blob/master/s2s.md
+    type: APIReference
+  - url: openapi/pollfish-openapi.yml
+    type: OpenAPI
+  description: Publisher-configured server-to-server postback callbacks. Pollfish
+    fires an HTTP GET to a URL template you register in the dashboard on survey
+    completion and (optionally) on user-not-eligible events, passing through
+    cpa, reward_name, reward_value, request_uuid, tx_id, click_id, status,
+    term_reason, and a signature for verification. Outbound postbacks only - there
+    is no inbound webhook-management REST endpoint and no WebSocket.
+common:
+- type: GitHubOrganization
+  url: https://github.com/pollfish
+- type: LinkedIn
+  url: https://www.linkedin.com/company/pollfish
+- type: Website
+  url: https://www.pollfish.com
+- type: Documentation
+  url: https://www.pollfish.com/docs
+- type: Plans
+  url: plans/pollfish-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/pollfish-rate-limits.yml
+- type: FinOps
+  url: finops/pollfish-finops.yml
+- type: Pricing
+  url: https://www.pollfish.com/pricing/
+- type: Blog
+  url: https://www.pollfish.com/blog/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

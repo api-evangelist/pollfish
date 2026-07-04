@@ -1,0 +1,134 @@
+aid: pollfish
+name: Pollfish
+review:
+  question: Does Pollfish expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-04'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Pollfish's documented public surfaces are
+    all request/response over HTTPS. The Dashboard API (app management and
+    analytics) and the survey-serving / offerwall API are ordinary REST/HTTP
+    calls. The only server-push mechanism Pollfish operates is the
+    server-to-server (s2s) postback callback: on a survey completion or
+    not-eligible event, Pollfish fires an outbound HTTP GET to a publisher-
+    configured URL template. That is a one-way HTTP webhook, not a WebSocket and
+    not an SSE stream on Pollfish's own API, so there is no server-push transport
+    on a Pollfish-hosted endpoint to model in AsyncAPI.
+findings:
+  summary: |
+    Pollfish does not publish a documented public WebSocket API. Pollfish is a
+    mobile survey and market-research platform owned by Prodege LLC. Its two
+    documented public REST surfaces are (1) the Dashboard API at
+    https://www.pollfish.com/api/public/v2 and /v3, authenticated with HTTP Basic
+    Auth (account email + secret key), for managing publisher apps and pulling
+    performance, revenue, demographic, and user-log analytics; and (2) the
+    survey-serving / offerwall API at https://wss.pollfish.com (GET/HEAD
+    /v2/device/register/true and GET /v2/device/survey/{survey_id}) used as an
+    alternative to the SDK to request and render surveys. IMPORTANT: although the
+    serving host is named "wss.pollfish.com", the transport is plain HTTPS
+    GET/HEAD - the "wss" is a hostname label (web survey server), NOT the
+    WebSocket Secure scheme. No ws:// or wss:// WebSocket connection is documented
+    anywhere in Pollfish's API documentation, dashboard API documentation, s2s
+    documentation, or SDK docs. Pollfish's only server-initiated messaging is the
+    s2s postback callback, an outbound one-way HTTP GET to a publisher URL.
+  ownership: |
+    Pollfish is owned by Prodege LLC, which operates it as one of its market
+    research platforms (ProdegeMR also appears as a mediation survey provider in
+    the survey_class enumeration).
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://www.pollfish.com/api/public
+      documented: true
+      note: Dashboard API (v2 apps CRUD, v3 performance/revenue/demographics/logs). HTTP Basic Auth.
+    - protocol: HTTP
+      scheme: https
+      baseURL: https://wss.pollfish.com
+      documented: true
+      note: Survey-serving / offerwall API. GET/HEAD /v2/device/register/true and GET /v2/device/survey/{survey_id}. Despite the "wss" hostname, transport is HTTPS, not WebSocket.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Server-to-server postback callbacks. Pollfish fires an outbound HTTP GET to a publisher-configured URL on survey completion / not-eligible. One-way, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented. The wss.pollfish.com hostname is a label, not the WebSocket Secure scheme; all calls to it are HTTPS GET/HEAD.
+  endpointsConfirmedRest:
+    - GET    https://www.pollfish.com/api/public/v2/apps
+    - POST   https://www.pollfish.com/api/public/v2/apps
+    - GET    https://www.pollfish.com/api/public/v2/apps/{api_key}
+    - PUT    https://www.pollfish.com/api/public/v2/apps/{api_key}
+    - DELETE https://www.pollfish.com/api/public/v2/apps/{api_key}
+    - GET    https://www.pollfish.com/api/public/v3/apps/performance
+    - GET    https://www.pollfish.com/api/public/v3/apps/{api_key}/performance
+    - GET    https://www.pollfish.com/api/public/v3/apps/{api_key}/performanceByCountry
+    - GET    https://www.pollfish.com/api/public/v3/apps/revenue
+    - GET    https://www.pollfish.com/api/public/v3/apps/{api_key}/revenue
+    - GET    https://www.pollfish.com/api/public/v3/apps/revenuePerCountry
+    - GET    https://www.pollfish.com/api/public/v3/apps/{api_key}/revenuePerCountry
+    - GET    https://www.pollfish.com/api/public/v3/apps/demographics
+    - GET    https://www.pollfish.com/api/public/v3/apps/{api_key}/users_log
+    - GET    https://wss.pollfish.com/v2/device/register/true
+    - HEAD   https://wss.pollfish.com/v2/device/register/true
+  endpointsModeled:
+    - GET    https://wss.pollfish.com/v2/device/survey/{survey_id}
+    - note: >-
+        The survey-render endpoint is referenced via the survey_link field of the
+        offerwall JSON response and returns an HTML survey experience rather than a
+        documented JSON schema, so its request/response shape is modeled. The
+        performanceByCountry response is documented by example only and is modeled
+        loosely.
+  webhooks:
+    documented: true
+    mechanism: server-to-server postback (outbound HTTP GET to a publisher URL)
+    events:
+      - survey completion
+      - user not eligible (eligible / noteligible, with term_reason)
+    passThroughParams:
+      - cpa
+      - reward_name
+      - reward_value
+      - request_uuid
+      - tx_id
+      - click_id
+      - status
+      - term_reason
+      - signature
+      - debug
+    note: >-
+      Configured in the publisher dashboard (or via the app callback_url), not via
+      a webhook-management REST endpoint. tx_id uniquely identifies a completion to
+      avoid duplicate crediting; signature enables verification. This is a webhook,
+      not a WebSocket.
+sources:
+  - url: https://www.pollfish.com/docs/api-documentation
+    type: Documentation
+    note: Survey-serving / offerwall API on wss.pollfish.com; GET /v2/device/register/true, survey_link -> /v2/device/survey/{id}. All HTTPS GET; no WebSocket.
+  - url: https://www.pollfish.com/docs/dashboard-api
+    type: APIReference
+    note: Dashboard API base https://www.pollfish.com; v2 apps CRUD and v3 analytics; HTTP Basic Auth. All REST.
+  - url: https://www.pollfish.com/docs/s2s
+    type: Documentation
+    note: Server-to-server postback callbacks (outbound HTTP GET) for completion and not-eligible events. One-way webhook, not WebSocket.
+  - url: https://github.com/pollfish/docs
+    type: SourceCode
+    note: Official Pollfish documentation repository. No WebSocket API documented in any file.
+  - url: https://github.com/pollfish/api-pollfish
+    type: SampleCode
+    note: Sample API integration project for the survey-serving API.
+  - url: https://www.pollfish.com/pricing/
+    type: Pricing
+    note: Researcher pay-per-response pricing from ~$0.95/response; publisher integration is free (revenue share).
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Pollfish's own public API is
+    request/response REST (Dashboard API) plus an HTTPS survey-serving API, and
+    its only server-initiated messaging is an outbound one-way HTTP postback
+    (s2s callback). No AsyncAPI document was created because there is no
+    server-push transport hosted on a Pollfish endpoint (no WebSocket, no SSE) to
+    model; the s2s postback is an outbound webhook to the publisher's own server.
