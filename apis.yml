@@ -196,6 +196,10 @@ apis:
     term_reason, and a signature for verification. Outbound postbacks only - there
     is no inbound webhook-management REST endpoint and no WebSocket.
 common:
+- type: DomainSecurity
+  url: security/pollfish-domain-security.yml
+- type: Authentication
+  url: authentication/pollfish-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/pollfish
 - type: LinkedIn

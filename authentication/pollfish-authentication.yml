@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pollfish-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic Auth for the Dashboard API. Username is your Pollfish account email,
+    password is your account secret key (from Account Information in the publisher dashboard).
+  sources:
+  - openapi/pollfish-openapi.yml
