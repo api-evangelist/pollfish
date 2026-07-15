@@ -196,6 +196,8 @@ apis:
     term_reason, and a signature for verification. Outbound postbacks only - there
     is no inbound webhook-management REST endpoint and no WebSocket.
 common:
+- type: AgenticAccess
+  url: agentic-access/pollfish-agentic-access.yml
 - type: DomainSecurity
   url: security/pollfish-domain-security.yml
 - type: Authentication
