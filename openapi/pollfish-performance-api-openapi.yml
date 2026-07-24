@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: Pollfish Apps Performance API
+  version: '2026.07'
+  description: "Unified OpenAPI description of Pollfish's documented public REST surfaces. Pollfish is a mobile survey and market-research platform owned by Prodege LLC.\n\nTwo hosts are covered:\n- `https://www.pollfish.com` - the Dashboard API (publisher app management and\n  analytics), HTTP Basic Auth with your Pollfish account email and secret key.\n- `https://wss.pollfish.com` - the survey-serving / offerwall API used as an\n  alternative to the SDK. Despite the `wss` hostname, the transport is HTTPS\n  GET/HEAD, NOT WebSocket.\n\n\nEndpoints are annotated with `x-endpoint-status` of `confirmed` (documented in Pollfish's own GitHub docs at github.com/pollfish/docs) or `modeled` (shape inferred where the response body is HTML or the schema is not exhaustively documented). Survey creation / audience design for researchers is done in the Pollfish dashboard and is not part of this documented public REST API."
+  contact:
+    name: Pollfish (Prodege)
+    url: https://www.pollfish.com/docs
+  termsOfService: https://www.pollfish.com/terms/
+  license:
+    name: Proprietary
+    url: https://www.pollfish.com/terms/
+servers:
+- url: https://www.pollfish.com
+  description: Dashboard API (apps, performance, revenue, demographics, logs)
+- url: https://wss.pollfish.com
+  description: Survey serving and offerwall API (HTTPS, not WebSocket)
+tags:
+- name: Performance
+  description: Survey-serving performance metrics.
+paths:
+  /api/public/v3/apps/performance:
+    get:
+      operationId: getAllAppsPerformance
+      tags:
+      - Performance
+      summary: Performance for all apps
+      description: Returns performance metrics (served, seen, accepted, completed) per survey network for all of the developer's apps over a date range of up to 31 days.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/From'
+      - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: Performance series grouped by network.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkPerformance'
+        '400':
+          description: Missing or invalid parameters.
+  /api/public/v3/apps/{api_key}/performance:
+    parameters:
+    - $ref: '#/components/parameters/ApiKeyPath'
+    get:
+      operationId: getAppPerformance
+      tags:
+      - Performance
+      summary: Performance for one app
+      description: Returns performance metrics for a single app over a date range of up to 31 days.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/From'
+      - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: Performance series grouped by network.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkPerformance'
+        '400':
+          description: Missing or invalid parameters.
+  /api/public/v3/apps/{api_key}/performanceByCountry:
+    parameters:
+    - $ref: '#/components/parameters/ApiKeyPath'
+    get:
+      operationId: getAppPerformanceByCountry
+      tags:
+      - Performance
+      summary: Performance for one app grouped by country
+      description: Returns performance metrics for a single app, grouped by country and network, over a date range of up to 31 days.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/From'
+      - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: Country-grouped performance. Shape is documented by example; modeled loosely here.
+          x-endpoint-status: modeled
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    countryISO:
+                      type: string
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/NetworkPerformance'
+        '400':
+          description: Missing or invalid parameters.
+components:
+  parameters:
+    ApiKeyPath:
+      name: api_key
+      in: path
+      required: true
+      description: The app's api_key.
+      schema:
+        type: string
+    From:
+      name: from
+      in: query
+      required: false
+      description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
+      schema:
+        type: string
+        format: date
+    To:
+      name: to
+      in: query
+      required: false
+      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
+      schema:
+        type: string
+        format: date
+  schemas:
+    NetworkPerformance:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Survey network name (Pollfish, Cint, Toluna, etc.).
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              served:
+                type: integer
+              seen:
+                type: integer
+              accepted:
+                type: integer
+              completed:
+                type: integer
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth for the Dashboard API. Username is your Pollfish account email, password is your account secret key (from Account Information in the publisher dashboard).

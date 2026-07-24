@@ -1,0 +1,253 @@
+openapi: 3.0.3
+info:
+  title: Pollfish Apps API
+  version: '2026.07'
+  description: "Unified OpenAPI description of Pollfish's documented public REST surfaces. Pollfish is a mobile survey and market-research platform owned by Prodege LLC.\n\nTwo hosts are covered:\n- `https://www.pollfish.com` - the Dashboard API (publisher app management and\n  analytics), HTTP Basic Auth with your Pollfish account email and secret key.\n- `https://wss.pollfish.com` - the survey-serving / offerwall API used as an\n  alternative to the SDK. Despite the `wss` hostname, the transport is HTTPS\n  GET/HEAD, NOT WebSocket.\n\n\nEndpoints are annotated with `x-endpoint-status` of `confirmed` (documented in Pollfish's own GitHub docs at github.com/pollfish/docs) or `modeled` (shape inferred where the response body is HTML or the schema is not exhaustively documented). Survey creation / audience design for researchers is done in the Pollfish dashboard and is not part of this documented public REST API."
+  contact:
+    name: Pollfish (Prodege)
+    url: https://www.pollfish.com/docs
+  termsOfService: https://www.pollfish.com/terms/
+  license:
+    name: Proprietary
+    url: https://www.pollfish.com/terms/
+servers:
+- url: https://www.pollfish.com
+  description: Dashboard API (apps, performance, revenue, demographics, logs)
+- url: https://wss.pollfish.com
+  description: Survey serving and offerwall API (HTTPS, not WebSocket)
+tags:
+- name: Apps
+  description: Publisher app / placement management (Dashboard API).
+paths:
+  /api/public/v2/apps:
+    get:
+      operationId: listApps
+      tags:
+      - Apps
+      summary: List apps
+      description: Returns an array of the authenticated developer's apps.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Array of app objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+    post:
+      operationId: createApp
+      tags:
+      - Apps
+      summary: Create an app
+      description: Creates a new publisher app (monetization placement) and returns its api_key.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppCreate'
+      responses:
+        '200':
+          description: The created app.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '400':
+          description: Missing or invalid parameters.
+  /api/public/v2/apps/{api_key}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKeyPath'
+    get:
+      operationId: getApp
+      tags:
+      - Apps
+      summary: Get an app
+      description: Returns a single app object by its api_key.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: The app object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '403':
+          description: App does not exist or you lack permission.
+    put:
+      operationId: updateApp
+      tags:
+      - Apps
+      summary: Update an app
+      description: Updates properties of an existing app. Only supplied fields are changed.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUpdate'
+      responses:
+        '200':
+          description: The updated app.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '400':
+          description: Missing or invalid parameters.
+        '403':
+          description: App does not exist or you lack permission.
+    delete:
+      operationId: deleteApp
+      tags:
+      - Apps
+      summary: Delete an app
+      description: Deletes an app by its api_key.
+      x-endpoint-status: confirmed
+      security:
+      - basicAuth: []
+      responses:
+        '204':
+          description: App deleted.
+        '403':
+          description: App does not exist or you lack permission.
+components:
+  schemas:
+    OfferwallReward:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+    AppUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        callback_url:
+          type: string
+        behavior:
+          type: integer
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+    RewardedSurvey:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+        fixed_amount:
+          type: boolean
+    App:
+      type: object
+      properties:
+        api_key:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        platform:
+          type: string
+          description: Android, iOS, Windows Phone, or Web.
+        category:
+          type: string
+          description: IAB category code.
+        subcategory:
+          type: string
+        url:
+          type: string
+        image:
+          type: string
+        behavior:
+          type: integer
+        incentive:
+          type: boolean
+        revenue:
+          type: number
+          format: float
+        short_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        data_collection_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+    AppCreate:
+      type: object
+      required:
+      - name
+      - category
+      - subcategory
+      - url
+      - platform
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        platform:
+          type: integer
+          description: 0 android, 1 ios, 2 windows phone, 3 web.
+        callback_url:
+          type: string
+          description: URL for server-to-server postback callbacks.
+        behavior:
+          type: integer
+          description: 0 indicators, 1 dynamic (recommended), 2 force slide regularly, 3 force all the time.
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+  parameters:
+    ApiKeyPath:
+      name: api_key
+      in: path
+      required: true
+      description: The app's api_key.
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth for the Dashboard API. Username is your Pollfish account email, password is your account secret key (from Account Information in the publisher dashboard).
