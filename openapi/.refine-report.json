@@ -1,0 +1,24 @@
+{
+  "provider": "pollfish",
+  "sources": [
+    "pollfish-apps-api-openapi.yml",
+    "pollfish-demographics-api-openapi.yml",
+    "pollfish-logs-api-openapi.yml",
+    "pollfish-performance-api-openapi.yml",
+    "pollfish-revenue-api-openapi.yml",
+    "pollfish-survey-distribution-api-openapi.yml"
+  ],
+  "outputs": [
+    "pollfish-apps-api-openapi.yml",
+    "pollfish-demographics-api-openapi.yml",
+    "pollfish-logs-api-openapi.yml",
+    "pollfish-performance-api-openapi.yml",
+    "pollfish-revenue-api-openapi.yml",
+    "pollfish-survey-distribution-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
