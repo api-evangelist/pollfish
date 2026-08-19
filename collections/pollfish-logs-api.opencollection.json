@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pollfish Apps Logs API",
+    "version": "2026.07"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/users_log",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "The app's api_key."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "The search term (device_id or request_uuid)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number when results are paginated."
+              },
+              {
+                "name": "rows",
+                "value": "",
+                "type": "query",
+                "description": "Number of rows returned."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns paginated per-user survey logs for a given device_id or request_uuid."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

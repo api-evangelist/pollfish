@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pollfish Apps Performance API",
+    "version": "2026.07"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Performance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Performance for all apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/performance",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns performance metrics (served, seen, accepted, completed) per survey network for all of the developer's apps over a date range of up to 31 days."
+        },
+        {
+          "info": {
+            "name": "Performance for one app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/performance",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "The app's api_key."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns performance metrics for a single app over a date range of up to 31 days."
+        },
+        {
+          "info": {
+            "name": "Performance for one app grouped by country",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/performanceByCountry",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "The app's api_key."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns performance metrics for a single app, grouped by country and network, over a date range of up to 31 days."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

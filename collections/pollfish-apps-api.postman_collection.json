@@ -1,0 +1,868 @@
+{
+  "item": [
+    {
+      "id": "c8cdc5f6-c24b-4171-b5c9-009784d19a10",
+      "name": "Apps",
+      "description": {
+        "content": "Publisher app / placement management (Dashboard API).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33f7ed1b-edbe-40c2-85c3-08ea759c9ff8",
+          "name": "List apps",
+          "request": {
+            "name": "List apps",
+            "description": {
+              "content": "Returns an array of the authenticated developer's apps.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "public",
+                "v2",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "922662be-5a6d-4760-8bf4-39fd9916b43a",
+              "name": "Array of app objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"api_key\": \"string\",\n    \"id\": 7060,\n    \"name\": \"string\",\n    \"platform\": \"string\",\n    \"category\": \"string\",\n    \"subcategory\": \"string\",\n    \"url\": \"string\",\n    \"image\": \"string\",\n    \"behavior\": 2335,\n    \"incentive\": true,\n    \"revenue\": 5530.405431912853,\n    \"short_surveys_enabled\": true,\n    \"third_party_surveys_enabled\": false,\n    \"data_collection_surveys_enabled\": false,\n    \"rewarded_survey\": {\n      \"currency_name\": \"string\",\n      \"variable_amount\": 2358.854278545125,\n      \"fixed_amount\": true\n    },\n    \"offerwall\": {\n      \"currency_name\": \"string\",\n      \"variable_amount\": 8018.055791766244\n    }\n  },\n  {\n    \"api_key\": \"string\",\n    \"id\": 8439,\n    \"name\": \"string\",\n    \"platform\": \"string\",\n    \"category\": \"string\",\n    \"subcategory\": \"string\",\n    \"url\": \"string\",\n    \"image\": \"string\",\n    \"behavior\": 4551,\n    \"incentive\": false,\n    \"revenue\": 1452.6104252720163,\n    \"short_surveys_enabled\": true,\n    \"third_party_surveys_enabled\": false,\n    \"data_collection_surveys_enabled\": true,\n    \"rewarded_survey\": {\n      \"currency_name\": \"string\",\n      \"variable_amount\": 5140.233905404859,\n      \"fixed_amount\": true\n    },\n    \"offerwall\": {\n      \"currency_name\": \"string\",\n      \"variable_amount\": 7470.025597304935\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eba2907c-ed2c-4742-ab0e-77978064cf8b",
+          "name": "Create an app",
+          "request": {
+            "name": "Create an app",
+            "description": {
+              "content": "Creates a new publisher app (monetization placement) and returns its api_key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "public",
+                "v2",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"platform\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9acf7215-3046-4f58-aa63-133a1e73b3a1",
+              "name": "The created app.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"platform\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": \"string\",\n  \"id\": 3407,\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"category\": \"string\",\n  \"subcategory\": \"string\",\n  \"url\": \"string\",\n  \"image\": \"string\",\n  \"behavior\": 6751,\n  \"incentive\": false,\n  \"revenue\": 1137.3274231103646,\n  \"short_surveys_enabled\": true,\n  \"third_party_surveys_enabled\": false,\n  \"data_collection_surveys_enabled\": true,\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0f57917-df56-4978-9868-0c4b8996e89e",
+              "name": "Missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"platform\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a97d0b62-5adc-45fd-b80e-ce97bdb1b239",
+          "name": "Get an app",
+          "request": {
+            "name": "Get an app",
+            "description": {
+              "content": "Returns a single app object by its api_key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "public",
+                "v2",
+                "apps",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) The app's api_key."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "73c024f8-affc-4764-8170-430ed2f1f74f",
+              "name": "The app object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": \"string\",\n  \"id\": 3407,\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"category\": \"string\",\n  \"subcategory\": \"string\",\n  \"url\": \"string\",\n  \"image\": \"string\",\n  \"behavior\": 6751,\n  \"incentive\": false,\n  \"revenue\": 1137.3274231103646,\n  \"short_surveys_enabled\": true,\n  \"third_party_surveys_enabled\": false,\n  \"data_collection_surveys_enabled\": true,\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13efb40c-85f7-4073-ad74-fc2413e78b05",
+              "name": "App does not exist or you lack permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "336c49fb-6593-473e-8a27-ce6e4404349b",
+          "name": "Update an app",
+          "request": {
+            "name": "Update an app",
+            "description": {
+              "content": "Updates properties of an existing app. Only supplied fields are changed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "public",
+                "v2",
+                "apps",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) The app's api_key."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40af755f-f466-4c80-a468-849179a8cb9e",
+              "name": "The updated app.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": \"string\",\n  \"id\": 3407,\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"category\": \"string\",\n  \"subcategory\": \"string\",\n  \"url\": \"string\",\n  \"image\": \"string\",\n  \"behavior\": 6751,\n  \"incentive\": false,\n  \"revenue\": 1137.3274231103646,\n  \"short_surveys_enabled\": true,\n  \"third_party_surveys_enabled\": false,\n  \"data_collection_surveys_enabled\": true,\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "859c3bfe-c552-4327-8dd8-c965b875bbff",
+              "name": "Missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e097011-9327-468d-91c9-18394f6332bd",
+              "name": "App does not exist or you lack permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"subcategory\": \"<string>\",\n  \"url\": \"<string>\",\n  \"callback_url\": \"<string>\",\n  \"behavior\": \"<integer>\",\n  \"data_collection_surveys_enabled\": \"<boolean>\",\n  \"third_party_surveys_enabled\": \"<boolean>\",\n  \"rewarded_survey\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\",\n    \"fixed_amount\": \"<boolean>\"\n  },\n  \"offerwall\": {\n    \"currency_name\": \"<string>\",\n    \"variable_amount\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea9e88bd-aa28-4deb-9f0e-1ed5ada2c73a",
+          "name": "Delete an app",
+          "request": {
+            "name": "Delete an app",
+            "description": {
+              "content": "Deletes an app by its api_key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "public",
+                "v2",
+                "apps",
+                ":api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "api_key",
+                  "description": "(Required) The app's api_key."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c233f94-29ff-4aae-bfff-708ec527ae91",
+              "name": "App deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ad7bea4-06e3-4c96-8f02-143d2783cbc6",
+              "name": "App does not exist or you lack permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "public",
+                    "v2",
+                    "apps",
+                    ":api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "api_key",
+                      "description": "(Required) The app's api_key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.pollfish.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c0da9fe3-a1d3-468f-9d42-72c1273d736f",
+    "name": "Pollfish Apps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified OpenAPI description of Pollfish's documented public REST surfaces. Pollfish is a mobile survey and market-research platform owned by Prodege LLC.\n\nTwo hosts are covered:\n- `https://www.pollfish.com` - the Dashboard API (publisher app management and\n  analytics), HTTP Basic Auth with your Pollfish account email and secret key.\n- `https://wss.pollfish.com` - the survey-serving / offerwall API used as an\n  alternative to the SDK. Despite the `wss` hostname, the transport is HTTPS\n  GET/HEAD, NOT WebSocket.\n\n\nEndpoints are annotated with `x-endpoint-status` of `confirmed` (documented in Pollfish's own GitHub docs at github.com/pollfish/docs) or `modeled` (shape inferred where the response body is HTML or the schema is not exhaustively documented). Survey creation / audience design for researchers is done in the Pollfish dashboard and is not part of this documented public REST API.\n\nContact Support:\n Name: Pollfish (Prodege)",
+      "type": "text/plain"
+    }
+  }
+}

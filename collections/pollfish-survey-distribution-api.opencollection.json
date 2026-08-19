@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pollfish Apps Survey Distribution API",
+    "version": "2026.07"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Survey Distribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request a survey / offerwall for a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/v2/device/register/true",
+            "params": [
+              {
+                "name": "json",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded JSON object carrying all register parameters (api_key, device_id, timestamp, ip, os, locale, version, encryption, placement_key, offerwall, content_type, reward_name, reward_conversion, click_id, targeting demographics, etc.). See the register JSON schema."
+              },
+              {
+                "name": "dontencrypt",
+                "value": "",
+                "type": "query",
+                "description": "Must be set to true on every request."
+              },
+              {
+                "name": "sig",
+                "value": "",
+                "type": "query",
+                "description": "Base64 + percent-encoded HMAC-SHA1 of reward_conversion+reward_name+click_id signed with your account secret key. Required when reward_conversion is passed."
+              }
+            ]
+          },
+          "docs": "Requests a matching survey (or, with `offerwall=true`, an offerwall) for a respondent device. All register parameters are passed inside the `json` query parameter as a JSON string; `dontencrypt=true` must be included. With `offerwall=true` and `content_type=json`, returns a JSON list of surveys with reward and remaining-completes data; otherwise returns an HTML page. Response is HTTP 200 when a survey is available, 204 when none is available. This host is wss.pollfish.com but the call is a norma"
+        },
+        {
+          "info": {
+            "name": "Check survey availability (no body)",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://www.pollfish.com/v2/device/register/true",
+            "params": [
+              {
+                "name": "json",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dontencrypt",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Same as the GET register call but returns only the status code, letting you check availability without transferring the HTML body."
+        },
+        {
+          "info": {
+            "name": "Load / render a specific survey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/v2/device/survey/:survey_id",
+            "params": [
+              {
+                "name": "survey_id",
+                "value": "",
+                "type": "path",
+                "description": "The survey id (as returned in an offerwall survey_link)."
+              },
+              {
+                "name": "json",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dontencrypt",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Loads a specific survey by id, as referenced by the `survey_link` returned in an offerwall response. Renders the survey HTML to the respondent. The `json` and `dontencrypt` query parameters mirror the register call. Marked modeled because the response is an HTML survey experience rather than a documented JSON schema."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

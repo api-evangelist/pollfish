@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pollfish Apps Revenue API",
+    "version": "2026.07"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Revenue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revenue per provider for all apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/revenue",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns total revenue per survey provider for all apps over a date range, optionally filtered by country."
+        },
+        {
+          "info": {
+            "name": "Revenue per provider for one app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/revenue",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "The app's api_key."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns total revenue per survey provider for a single app over a date range, optionally filtered by country."
+        },
+        {
+          "info": {
+            "name": "Revenue per country for all apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/revenuePerCountry",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns total revenue per country for all apps over a date range, optionally filtered by country."
+        },
+        {
+          "info": {
+            "name": "Revenue per country for one app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.pollfish.com/api/public/v3/apps/:api_key/revenuePerCountry",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "path",
+                "description": "The app's api_key."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns total revenue per country for a single app over a date range, optionally filtered by country."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
