@@ -37,7 +37,7 @@ tags:
 - Prodege
 created: '2026-07-04'
 modified: '2026-07-04'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: pollfish:pollfish-apps-api
   name: Pollfish Apps API
