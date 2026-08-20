@@ -45,6 +45,8 @@ apis:
   humanURL: https://www.pollfish.com/docs/dashboard-api
   baseURL: https://www.pollfish.com/api/public/v2
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
