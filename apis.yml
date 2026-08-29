@@ -13,6 +13,18 @@ description: Pollfish is a mobile-first survey and market research platform, own
   server-to-server postback callbacks for survey-completion and eligibility
   events. Survey creation and audience targeting for researchers are done through
   the Pollfish dashboard and are not exposed as a documented public REST API.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
