@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pollfish Apps Survey Distribution API
+  title: Pollfish Survey Distribution API
   version: '2026.07'
-  description: "Unified OpenAPI description of Pollfish's documented public REST surfaces. Pollfish is a mobile survey and market-research platform owned by Prodege LLC.\n\nTwo hosts are covered:\n- `https://www.pollfish.com` - the Dashboard API (publisher app management and\n  analytics), HTTP Basic Auth with your Pollfish account email and secret key.\n- `https://wss.pollfish.com` - the survey-serving / offerwall API used as an\n  alternative to the SDK. Despite the `wss` hostname, the transport is HTTPS\n  GET/HEAD, NOT WebSocket.\n\n\nEndpoints are annotated with `x-endpoint-status` of `confirmed` (documented in Pollfish's own GitHub docs at github.com/pollfish/docs) or `modeled` (shape inferred where the response body is HTML or the schema is not exhaustively documented). Survey creation / audience design for researchers is done in the Pollfish dashboard and is not part of this documented public REST API."
+  description: Unified OpenAPI description of Pollfish's documented public REST surfaces.
   contact:
     name: Pollfish (Prodege)
     url: https://www.pollfish.com/docs
