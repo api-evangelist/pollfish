@@ -125,14 +125,6 @@ paths:
           description: Missing or invalid parameters.
 components:
   parameters:
-    To:
-      name: to
-      in: query
-      required: false
-      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
-      schema:
-        type: string
-        format: date
     Countries:
       name: countries
       in: query
@@ -140,11 +132,11 @@ components:
       description: Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries.
       schema:
         type: string
-    From:
-      name: from
+    To:
+      name: to
       in: query
       required: false
-      description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
+      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
       schema:
         type: string
         format: date
@@ -155,26 +147,15 @@ components:
       description: The app's api_key.
       schema:
         type: string
+    From:
+      name: from
+      in: query
+      required: false
+      description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
+      schema:
+        type: string
+        format: date
   schemas:
-    RevenuePerCountryDay:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-        total:
-          type: number
-          format: float
-        countries:
-          type: array
-          items:
-            type: object
-            properties:
-              iso_code:
-                type: string
-              amount:
-                type: number
-                format: float
     ProviderRevenue:
       type: object
       properties:
@@ -191,6 +172,25 @@ components:
               date:
                 type: string
                 format: date
+              amount:
+                type: number
+                format: float
+    RevenuePerCountryDay:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        total:
+          type: number
+          format: float
+        countries:
+          type: array
+          items:
+            type: object
+            properties:
+              iso_code:
+                type: string
               amount:
                 type: number
                 format: float

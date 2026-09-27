@@ -105,19 +105,19 @@ paths:
           description: Missing or invalid parameters.
 components:
   parameters:
-    To:
-      name: to
-      in: query
-      required: false
-      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
-      schema:
-        type: string
-        format: date
     From:
       name: from
       in: query
       required: false
       description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
+      schema:
+        type: string
+        format: date
+    To:
+      name: to
+      in: query
+      required: false
+      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
       schema:
         type: string
         format: date

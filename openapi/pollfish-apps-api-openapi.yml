@@ -125,81 +125,6 @@ paths:
           description: App does not exist or you lack permission.
 components:
   schemas:
-    AppCreate:
-      type: object
-      required:
-      - name
-      - category
-      - subcategory
-      - url
-      - platform
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        subcategory:
-          type: string
-        url:
-          type: string
-        platform:
-          type: integer
-          description: 0 android, 1 ios, 2 windows phone, 3 web.
-        callback_url:
-          type: string
-          description: URL for server-to-server postback callbacks.
-        behavior:
-          type: integer
-          description: 0 indicators, 1 dynamic (recommended), 2 force slide regularly, 3 force all the time.
-        data_collection_surveys_enabled:
-          type: boolean
-        third_party_surveys_enabled:
-          type: boolean
-        rewarded_survey:
-          $ref: '#/components/schemas/RewardedSurvey'
-        offerwall:
-          $ref: '#/components/schemas/OfferwallReward'
-    AppUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        subcategory:
-          type: string
-        url:
-          type: string
-        callback_url:
-          type: string
-        behavior:
-          type: integer
-        data_collection_surveys_enabled:
-          type: boolean
-        third_party_surveys_enabled:
-          type: boolean
-        rewarded_survey:
-          $ref: '#/components/schemas/RewardedSurvey'
-        offerwall:
-          $ref: '#/components/schemas/OfferwallReward'
-    OfferwallReward:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-    RewardedSurvey:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-        fixed_amount:
-          type: boolean
     App:
       type: object
       properties:
@@ -238,6 +163,81 @@ components:
           $ref: '#/components/schemas/RewardedSurvey'
         offerwall:
           $ref: '#/components/schemas/OfferwallReward'
+    AppUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        callback_url:
+          type: string
+        behavior:
+          type: integer
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+    OfferwallReward:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+    AppCreate:
+      type: object
+      required:
+      - name
+      - category
+      - subcategory
+      - url
+      - platform
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        platform:
+          type: integer
+          description: 0 android, 1 ios, 2 windows phone, 3 web.
+        callback_url:
+          type: string
+          description: URL for server-to-server postback callbacks.
+        behavior:
+          type: integer
+          description: 0 indicators, 1 dynamic (recommended), 2 force slide regularly, 3 force all the time.
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+    RewardedSurvey:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+        fixed_amount:
+          type: boolean
   parameters:
     ApiKeyPath:
       name: api_key
