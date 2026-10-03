@@ -60,6 +60,14 @@ paths:
         '400':
           description: Missing or invalid parameters.
 components:
+  parameters:
+    ApiKeyPath:
+      name: api_key
+      in: path
+      required: true
+      description: The app's api_key.
+      schema:
+        type: string
   schemas:
     UsersLog:
       type: object
@@ -84,14 +92,6 @@ components:
                 - string
                 - 'null'
                 description: One of the public termination reasons (Quota Full, Survey Closed, Screenout, Duplicate, VPN, Quality, etc.) or null.
-  parameters:
-    ApiKeyPath:
-      name: api_key
-      in: path
-      required: true
-      description: The app's api_key.
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http

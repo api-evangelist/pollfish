@@ -194,6 +194,16 @@ components:
         variable_amount:
           type: number
           format: float
+    RewardedSurvey:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+        fixed_amount:
+          type: boolean
     AppCreate:
       type: object
       required:
@@ -228,16 +238,6 @@ components:
           $ref: '#/components/schemas/RewardedSurvey'
         offerwall:
           $ref: '#/components/schemas/OfferwallReward'
-    RewardedSurvey:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-        fixed_amount:
-          type: boolean
   parameters:
     ApiKeyPath:
       name: api_key
