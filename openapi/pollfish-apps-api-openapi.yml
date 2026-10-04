@@ -125,6 +125,24 @@ paths:
           description: App does not exist or you lack permission.
 components:
   schemas:
+    OfferwallReward:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+    RewardedSurvey:
+      type: object
+      properties:
+        currency_name:
+          type: string
+        variable_amount:
+          type: number
+          format: float
+        fixed_amount:
+          type: boolean
     App:
       type: object
       properties:
@@ -163,47 +181,6 @@ components:
           $ref: '#/components/schemas/RewardedSurvey'
         offerwall:
           $ref: '#/components/schemas/OfferwallReward'
-    AppUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        subcategory:
-          type: string
-        url:
-          type: string
-        callback_url:
-          type: string
-        behavior:
-          type: integer
-        data_collection_surveys_enabled:
-          type: boolean
-        third_party_surveys_enabled:
-          type: boolean
-        rewarded_survey:
-          $ref: '#/components/schemas/RewardedSurvey'
-        offerwall:
-          $ref: '#/components/schemas/OfferwallReward'
-    OfferwallReward:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-    RewardedSurvey:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-        fixed_amount:
-          type: boolean
     AppCreate:
       type: object
       required:
@@ -230,6 +207,29 @@ components:
         behavior:
           type: integer
           description: 0 indicators, 1 dynamic (recommended), 2 force slide regularly, 3 force all the time.
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
+    AppUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        callback_url:
+          type: string
+        behavior:
+          type: integer
         data_collection_surveys_enabled:
           type: boolean
         third_party_surveys_enabled:

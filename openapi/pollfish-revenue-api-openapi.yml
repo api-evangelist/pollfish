@@ -124,37 +124,6 @@ paths:
         '400':
           description: Missing or invalid parameters.
 components:
-  parameters:
-    Countries:
-      name: countries
-      in: query
-      required: false
-      description: Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries.
-      schema:
-        type: string
-    From:
-      name: from
-      in: query
-      required: false
-      description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
-      schema:
-        type: string
-        format: date
-    ApiKeyPath:
-      name: api_key
-      in: path
-      required: true
-      description: The app's api_key.
-      schema:
-        type: string
-    To:
-      name: to
-      in: query
-      required: false
-      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
-      schema:
-        type: string
-        format: date
   schemas:
     ProviderRevenue:
       type: object
@@ -194,6 +163,37 @@ components:
               amount:
                 type: number
                 format: float
+  parameters:
+    To:
+      name: to
+      in: query
+      required: false
+      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
+      schema:
+        type: string
+        format: date
+    From:
+      name: from
+      in: query
+      required: false
+      description: Start date (ISO 8601 yyyy-MM-dd, UTC). Defaults to one month before `to`. The from/to window must not exceed 31 days.
+      schema:
+        type: string
+        format: date
+    Countries:
+      name: countries
+      in: query
+      required: false
+      description: Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries.
+      schema:
+        type: string
+    ApiKeyPath:
+      name: api_key
+      in: path
+      required: true
+      description: The app's api_key.
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http
