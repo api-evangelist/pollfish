@@ -125,6 +125,29 @@ paths:
           description: App does not exist or you lack permission.
 components:
   schemas:
+    AppUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        subcategory:
+          type: string
+        url:
+          type: string
+        callback_url:
+          type: string
+        behavior:
+          type: integer
+        data_collection_surveys_enabled:
+          type: boolean
+        third_party_surveys_enabled:
+          type: boolean
+        rewarded_survey:
+          $ref: '#/components/schemas/RewardedSurvey'
+        offerwall:
+          $ref: '#/components/schemas/OfferwallReward'
     OfferwallReward:
       type: object
       properties:
@@ -133,16 +156,6 @@ components:
         variable_amount:
           type: number
           format: float
-    RewardedSurvey:
-      type: object
-      properties:
-        currency_name:
-          type: string
-        variable_amount:
-          type: number
-          format: float
-        fixed_amount:
-          type: boolean
     App:
       type: object
       properties:
@@ -215,29 +228,16 @@ components:
           $ref: '#/components/schemas/RewardedSurvey'
         offerwall:
           $ref: '#/components/schemas/OfferwallReward'
-    AppUpdate:
+    RewardedSurvey:
       type: object
       properties:
-        name:
+        currency_name:
           type: string
-        category:
-          type: string
-        subcategory:
-          type: string
-        url:
-          type: string
-        callback_url:
-          type: string
-        behavior:
-          type: integer
-        data_collection_surveys_enabled:
+        variable_amount:
+          type: number
+          format: float
+        fixed_amount:
           type: boolean
-        third_party_surveys_enabled:
-          type: boolean
-        rewarded_survey:
-          $ref: '#/components/schemas/RewardedSurvey'
-        offerwall:
-          $ref: '#/components/schemas/OfferwallReward'
   parameters:
     ApiKeyPath:
       name: api_key

@@ -125,25 +125,6 @@ paths:
           description: Missing or invalid parameters.
 components:
   schemas:
-    ProviderRevenue:
-      type: object
-      properties:
-        name:
-          type: string
-        total:
-          type: number
-          format: float
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                type: string
-                format: date
-              amount:
-                type: number
-                format: float
     RevenuePerCountryDay:
       type: object
       properties:
@@ -163,15 +144,26 @@ components:
               amount:
                 type: number
                 format: float
+    ProviderRevenue:
+      type: object
+      properties:
+        name:
+          type: string
+        total:
+          type: number
+          format: float
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              amount:
+                type: number
+                format: float
   parameters:
-    To:
-      name: to
-      in: query
-      required: false
-      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
-      schema:
-        type: string
-        format: date
     From:
       name: from
       in: query
@@ -187,6 +179,14 @@ components:
       description: Comma-separated ISO Alpha-2 country codes to filter revenue by. Omit for all countries.
       schema:
         type: string
+    To:
+      name: to
+      in: query
+      required: false
+      description: End date (ISO 8601 yyyy-MM-dd, UTC). Defaults to the current date.
+      schema:
+        type: string
+        format: date
     ApiKeyPath:
       name: api_key
       in: path
