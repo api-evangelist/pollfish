@@ -1,4 +1,4 @@
-# Pollfish (pollfish)
+# Pollfish
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,97 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Pollfish is a mobile-first survey and market-research platform owned by **Prodege LLC**. It has two sides: researchers reach real respondents inside mobile apps and websites to run surveys, and app publishers monetize their audience by serving Pollfish (and mediated third-party) surveys as rewarded ads or an offerwall. Pollfish exposes a REST **Dashboard API** on `https://www.pollfish.com` for managing publisher apps and pulling performance, revenue, demographic, and user-log analytics (HTTP Basic Auth), a **survey-serving / offerwall API** on `https://wss.pollfish.com` for requesting and rendering surveys (plain HTTPS GET/HEAD — the `wss` hostname is *not* WebSocket), and **server-to-server postback callbacks** for survey-completion and eligibility events. Survey creation and audience targeting for researchers are done in the Pollfish dashboard and are not exposed as a documented public REST API.
+Pollfish is a mobile-first survey and market research platform, owned by Prodege LLC. It lets researchers reach real respondents inside mobile apps and websites and lets app publishers monetize their audience by serving Pollfish (and mediated third-party) surveys as rewarded ads or an offerwall. Pollfish exposes a REST Dashboard API on https://www.pollfish.com for managing publisher apps and pulling performance, revenue, demographic, and user-log analytics (HTTP Basic Auth), plus a survey-serving / offerwall API on https://wss.pollfish.com for requesting and rendering surveys, and server-to-server postback callbacks for survey-completion and eligibility events. Survey creation and audience targeting for researchers are done through the Pollfish dashboard and are not exposed as a documented public REST API.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/pollfish/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/pollfish/refs/heads/main/apis.yml)
+**Areas:** Surveys · Market Research · Mobile · Monetization · Offerwall · Rewarded Ads · Prodege
 
-## Tags
+## Pollfish on APIs.io
 
-- Surveys
-- Market Research
-- Mobile
-- Monetization
-- Offerwall
-- Rewarded Ads
-- Prodege
+Everything profiled for Pollfish is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pollfish/](https://apis.io/providers/pollfish/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-07-04
-- **Modified:** 2026-07-04
+- [Pollfish Apps API](https://apis.io/apis/pollfish/pollfish-apps-api/) — Publisher app / placement management (Dashboard API).
+- [Pollfish Demographics API](https://apis.io/apis/pollfish/pollfish-demographics-api/) — Respondent demographic profiles.
+- [Pollfish Logs API](https://apis.io/apis/pollfish/pollfish-logs-api/) — Per-user survey logs and disqualification reasons.
+- [Pollfish Performance API](https://apis.io/apis/pollfish/pollfish-performance-api/) — Survey-serving performance metrics.
+- [Pollfish Revenue API](https://apis.io/apis/pollfish/pollfish-revenue-api/) — Revenue reporting per provider and per country.
+- [Pollfish Survey Distribution API](https://apis.io/apis/pollfish/pollfish-survey-distribution-api/) — Device register, offerwall, and survey rendering.
 
-## APIs
+### Published properties
 
-### Pollfish Apps API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create, read, update, and delete the publisher apps (monetization placements) that receive Pollfish surveys. Each app carries category, platform, behavior, reward-currency, and offerwall configuration, and returns an `api_key` used across the rest of the platform. HTTP Basic Auth with Pollfish email plus account secret key.
+#### Agentic access (1)
 
-- **Human URL:** [https://www.pollfish.com/docs/dashboard-api](https://www.pollfish.com/docs/dashboard-api)
-- **Base URL:** `https://www.pollfish.com/api/public/v2`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Pollfish Performance API
+- [Pollfish Agentic Access](https://apis.io/agentic-access/pollfish/pollfish-agentic-access/)
 
-Pull survey-serving performance metrics (served, seen, accepted, completed) per survey network, for all apps or a single app, over a date range of up to 31 days, optionally grouped by country.
+#### Collections (7)
 
-- **Human URL:** [https://www.pollfish.com/docs/dashboard-api](https://www.pollfish.com/docs/dashboard-api)
-- **Base URL:** `https://www.pollfish.com/api/public/v3`
+Postman and Open Collection request collections.
 
-### Pollfish Revenue API
+- [Pollfish API](https://apis.io/collections/pollfish/open-pollfish/)
+- [Pollfish Apps API](https://apis.io/collections/pollfish/open-pollfish-apps-api/)
+- [Pollfish Apps Demographics API](https://apis.io/collections/pollfish/open-pollfish-demographics-api/)
+- [Pollfish Apps Logs API](https://apis.io/collections/pollfish/open-pollfish-logs-api/)
+- [Pollfish Apps Performance API](https://apis.io/collections/pollfish/open-pollfish-performance-api/)
+- [Pollfish Apps Revenue API](https://apis.io/collections/pollfish/open-pollfish-revenue-api/)
+- [Pollfish Apps Survey Distribution API](https://apis.io/collections/pollfish/open-pollfish-survey-distribution-api/)
 
-Report publisher revenue per survey provider (Pollfish, Toluna, Cint, and other mediation networks) and per country, for all apps or a single app, over a date range, with optional ISO country filtering.
+#### Security (2)
 
-- **Human URL:** [https://www.pollfish.com/docs/dashboard-api](https://www.pollfish.com/docs/dashboard-api)
-- **Base URL:** `https://www.pollfish.com/api/public/v3`
+Authentication, trust centre, and vulnerability disclosure.
 
-### Pollfish Respondent Demographics API
+- [Pollfish Authentication](https://apis.io/security/pollfish/pollfish-authentication/)
+- [Pollfish Domain Security](https://apis.io/security/pollfish/pollfish-domain-security/)
 
-Fetch the collected demographic profile (gender, year of birth, education, employment, income, marital status, parental, race, career) for a given respondent device id, using Pollfish's demographic enumeration codes.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://www.pollfish.com/docs/demographic-surveys](https://www.pollfish.com/docs/demographic-surveys)
-- **Base URL:** `https://www.pollfish.com/api/public/v3`
+Published plans, tiers and prices.
 
-### Pollfish User Logs API
+- [Pollfish Plans Pricing](https://apis.io/plans/pollfish/pollfish-plans-pricing/)
 
-Retrieve paginated per-user survey logs for a given `device_id` or `request_uuid` — which surveys were started and completed, and the disqualification reason (quota full, screenout, duplicate, VPN, quality, and other public termination reasons) when not completed.
+#### Rate limits (1)
 
-- **Human URL:** [https://www.pollfish.com/docs/dashboard-api](https://www.pollfish.com/docs/dashboard-api)
-- **Base URL:** `https://www.pollfish.com/api/public/v3`
+Published request limits.
 
-### Pollfish Survey Distribution and Offerwall API
+- [Pollfish Rate Limits](https://apis.io/rate-limits/pollfish/pollfish-rate-limits/)
 
-The SDK-alternative survey-serving surface. Register a device to request a matching survey (or a JSON offerwall list of surveys with reward and remaining-completes data), then load the returned `survey_link` to render the survey to the respondent. Supports single-survey, HTML offerwall, and JSON offerwall modes, targeting via demographic and device parameters, and reward-conversion signing. The host is `wss.pollfish.com` but the transport is HTTPS GET, not WebSocket.
+#### FinOps (1)
 
-- **Human URL:** [https://www.pollfish.com/docs/api-documentation](https://www.pollfish.com/docs/api-documentation)
-- **Base URL:** `https://wss.pollfish.com`
+What the API costs to run, by operation.
 
-### Pollfish Server-to-Server Callbacks
+- [Pollfish Finops](https://apis.io/finops/pollfish/pollfish-finops/)
 
-Publisher-configured server-to-server postback callbacks. Pollfish fires an HTTP GET to a URL template you register in the dashboard on survey completion and (optionally) on user-not-eligible events, passing through `cpa`, `reward_name`, `reward_value`, `request_uuid`, `tx_id`, `click_id`, `status`, `term_reason`, and a `signature` for verification. Outbound postbacks only — there is no inbound webhook-management REST endpoint and no WebSocket.
+## Where to find this API
 
-- **Human URL:** [https://www.pollfish.com/docs/s2s](https://www.pollfish.com/docs/s2s)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-## Authentication
-
-- **Dashboard API** (`www.pollfish.com`) — HTTP Basic Auth. Username is your Pollfish account email; password is your account secret key (from Account Information in the publisher dashboard).
-- **Survey-serving API** (`wss.pollfish.com`) — Your app `api_key` and `placement_key` are passed inside the URL-encoded `json` query parameter; reward-conversion parameters are protected with an HMAC-SHA1 `sig`.
-
-## WebSocket Review
-
-**Does Pollfish expose a documented public WebSocket API? No.** All documented surfaces are request/response over HTTPS. The `wss.pollfish.com` host is a plain HTTPS endpoint (the label is not the WebSocket Secure scheme). Pollfish's only server-initiated messaging is the one-way s2s postback (an outbound HTTP GET to the publisher's URL), which is a webhook, not a WebSocket. See [review.yml](review.yml).
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/pollfish)
-- [LinkedIn](https://www.linkedin.com/company/pollfish)
 - [Website](https://www.pollfish.com)
 - [Documentation](https://www.pollfish.com/docs)
-- [Plans](plans/pollfish-plans-pricing.yml)
-- [Rate Limits](rate-limits/pollfish-rate-limits.yml)
-- [Fin Ops](finops/pollfish-finops.yml)
 - [Pricing](https://www.pollfish.com/pricing/)
 - [Blog](https://www.pollfish.com/blog/)
+- [GitHub](https://github.com/pollfish)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 53.5 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 18.4 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pollfish/](https://apis.io/providers/pollfish/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Pollfish: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pollfish/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
